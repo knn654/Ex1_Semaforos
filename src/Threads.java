@@ -28,20 +28,15 @@ public class Threads extends Thread {
 	private int numComprador;
 	private Semaphore semaforo;
 	static int estoque = 100;
-	public Threads(int numComprador, Semaphore semaforo) {
+	private int qtdIngressos;
+	public Threads(int numComprador, Semaphore semaforo, int qtdIngressos) {
 		this.numComprador = numComprador;
 		this.semaforo = semaforo;
+		this.qtdIngressos = qtdIngressos;
 	}
 	
 	public void run() {
-		try {
-			semaforo.acquire();
-			comprarIngresso();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			semaforo.release();
-		}
+		comprarIngresso();
 	}
 	
 	public void comprarIngresso() {
@@ -53,10 +48,17 @@ public class Threads extends Thread {
 			e.printStackTrace();
 		}
 		if (tempoEspera > 100) {
-			System.out.println("Você levou timeout usuário #" + numComprador);
+			System.out.println("Você levou timeout no login usuário #" + numComprador + ", tempo total: " + tempoEspera + "ms");
 		} else {
-			System.out.println("Usuário " + numComprador + " logado");
-			efetuarCompra();
+			System.out.println("Usuário " + numComprador + " logado! Quantidade de ingressos: " + qtdIngressos);
+			try {
+				semaforo.acquire();
+				efetuarCompra();
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				semaforo.release();
+			}
 		}
 		
 		
@@ -70,13 +72,13 @@ public class Threads extends Thread {
 			e.printStackTrace();
 		}
 		if (tempoEspera >= 250) {
-			System.out.println("Você levou timeout, usuário #" + numComprador);
+			System.out.println("Você levou timeout na compra, usuário #" + numComprador + ", tempo total: " + tempoEspera + "ms");
 		} else {
-			int ingressos = (int) (Math.random() * 3) + 1;
-			if (ingressos <= estoque) {
-				System.out.println("Parabéns usuário #" + numComprador + ", você acabou de comprar " + ingressos + " ingressos!");
+			if (qtdIngressos <= estoque) {
+				estoque = estoque - qtdIngressos;
+				System.out.println("Parabéns usuário #" + numComprador + ", você acabou de comprar " + qtdIngressos + " ingressos! Estoque: " + estoque);
 			} else {
-				System.out.println("Quantidade de ingressos desejada menor do que a disponível.");
+				System.out.println("Quantidade de ingressos desejada (" + qtdIngressos +") menor do que a disponível, usuário #" + numComprador);
 			}
 		}
 	}

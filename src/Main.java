@@ -17,7 +17,8 @@ Simultaneamente, 300 pessoas, no primeiro instante acessam o sistema de compra.
 		semaforo = new Semaphore(maxAcessos);
 		
 		for (int i = 0; i < totalCompradores; i++) {
-			Thread compradores = new Threads(i, semaforo);
+			int qtdIngressos = (int) (Math.random() * 3) + 1;
+			Thread compradores = new Threads(i, semaforo, qtdIngressos);
 			compradores.start();
 		}
 	}
