@@ -12,7 +12,7 @@ public static Semaphore semaforo;
 		semaforo = new Semaphore(maxAcessos);
 		
 		for (int i = 0; i < totalCompradores; i++) {
-			int qtdIngressos = (int) (Math.random() * 3) + 1;
+			int qtdIngressos = (int) (Math.random() * 4) + 1;
 			Thread compradores = new Threads(i, semaforo, qtdIngressos);
 			compradores.start();
 		}
