@@ -17,7 +17,7 @@ public class Threads extends Thread {
 	
 	public void comprarIngresso() {
 		System.out.println("Logando no sistema... ");
-		int tempoEspera = (int) (Math.random() * 150) + 50;
+		int tempoEspera = (int) (Math.random() * 151) + 50;
 		try {
 			Thread.sleep(tempoEspera);
 		} catch (Exception e) {
@@ -41,7 +41,7 @@ public class Threads extends Thread {
 	}
 	
 	public void efetuarCompra() {
-		int tempoEspera = (int) (Math.random() * 200) + 100;
+		int tempoEspera = (int) (Math.random() * 201) + 100;
 		try {
 			Thread.sleep(tempoEspera);
 		} catch (Exception e) {
