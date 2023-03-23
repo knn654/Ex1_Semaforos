@@ -5,6 +5,7 @@ public class Threads extends Thread {
 	private Semaphore semaforo;
 	static int estoque = 100;
 	private int qtdIngressos;
+	
 	public Threads(int numComprador, Semaphore semaforo, int qtdIngressos) {
 		this.numComprador = numComprador;
 		this.semaforo = semaforo;
@@ -16,7 +17,7 @@ public class Threads extends Thread {
 	}
 	
 	public void comprarIngresso() {
-		System.out.println("Logando no sistema... ");
+		System.out.println("Logando no sistema...");
 		int tempoEspera = (int) (Math.random() * 151) + 50;
 		try {
 			Thread.sleep(tempoEspera);
@@ -26,7 +27,7 @@ public class Threads extends Thread {
 		if (tempoEspera > 100) {
 			System.out.println("Você levou timeout no login usuário #" + numComprador + ", tempo total: " + tempoEspera + "ms");
 		} else {
-			System.out.println("Usuário " + numComprador + " logado! Quantidade de ingressos: " + qtdIngressos);
+			System.out.println("Usuário " + numComprador + " logado! Quantidade de ingressos desejada: " + qtdIngressos);
 			try {
 				semaforo.acquire();
 				efetuarCompra();
